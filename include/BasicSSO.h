@@ -1,8 +1,6 @@
 #include <iostream>
-#include <string>
-
 #include <cstring>
-#include <iostream>
+#include <memory>
 
 class BasicSSO {
 public:
@@ -16,7 +14,7 @@ public:
   ~BasicSSO() { 
     // Delete even on the heap
     if (length_ > BUFFER_SIZE) {
-      delete[] data_;
+      data_.reset();
     }
   }
 
@@ -27,9 +25,8 @@ public:
       buffer_[length_] = '\0';
     } else {
       // If not SSO place in data_
-      data_ = new char[length_ + 1];
-      std::strcpy(data_, other);
-      data_[length_] = '\0';
+      data_.reset(new char[length_ + 1]);
+      std::strcpy(data_.get(), other);
     }
   }
 
@@ -39,46 +36,56 @@ public:
   // When assigning a obejct with another
   BasicSSO& operator=(const BasicSSO& original) {
     if (this != &original) {
-        // Free any previously allocated memory
         if (original.length() > BUFFER_SIZE) {
-          data_ = new char[original.length() + 1];
-          std::strcpy(data_, original.c_str());
+            std::strcpy(data_.get(), original.c_str());
         } else {
-          std::strcpy(buffer_, original.c_str());
-          buffer_[original.length()] = '\0';
+            std::strcpy(buffer_, original.c_str());
         }
+        buffer_[length_] = '\0';
         length_ = original.length();
     }
     return *this;
   }
 
-  
+  BasicSSO(BasicSSO&& other) noexcept : length_(other.length_) {
+    if (length_ > BUFFER_SIZE) {
+      data_.swap(other.data_);
+    } else {
+      std::strcpy(buffer_, other.buffer_);
+    }
+    buffer_[length_] = '\0';
+  }
+
+  BasicSSO& operator=(BasicSSO&& other) noexcept {
+    if (this != &other) {
+        length_ = other.length_;
+        if (length_ > BUFFER_SIZE) {
+            data_.swap(other.data_);
+        } else {
+            std::strcpy(buffer_, other.buffer_);
+        }
+        buffer_[length_] = '\0';
+    }
+    return *this;
+  }
 
   BasicSSO& operator+=(const char* other_string) {
-    BasicSSO::append(other_string);
+    append(other_string);
     return *this;
   }
 
   void append(const char* other_string) {
-    size_t new_length = length_ + std::strlen(other_string);
-    char* new_data = new char[new_length + 1];
-
-    if (new_length > BUFFER_SIZE) {
-      new_data = new char[new_length + 1];
-      if (length_ <= BUFFER_SIZE) {
-        std::strcpy(new_data, buffer_);
-      } else {
-        std::strcpy(new_data, data_);
-      }
-      delete[] data_;
-      data_ = new_data;
+    size_t other_length = std::strlen(other_string);
+    size_t new_length = length_ + other_length;
+    if (new_length < BUFFER_SIZE) {
+      std::strcat(buffer_, other_string);
     } else {
-      new_data = buffer_;
+      std::unique_ptr<char[]> new_data(new char[new_length + 1]);
+      std::strcpy(new_data.get(), c_str());
+      std::strcat(new_data.get(), other_string);
+      data_ = std::move(new_data);
     }
-
-    std::strcat(new_data, other_string);
     length_ = new_length;
-    new_data[length_] = '\0';
   }
 
   size_t length() const { return length_; }
@@ -87,7 +94,7 @@ public:
     if (length_ <= BUFFER_SIZE) {
       return buffer_;
     } else {
-      return data_;
+      return data_.get();
     }
   }
 
@@ -95,16 +102,8 @@ private:
   union{
     char buffer_[BUFFER_SIZE];
     // 16 bytes
-    char *data_;
+    std::unique_ptr<char[]> data_;
     // 4 bytes
   };
   size_t length_;
-  // 4 bytes
-
-  void clear() {
-    if (length_ > BUFFER_SIZE) {
-      delete[] data_;
-    }
-    length_ = 0;
-  }
 };
