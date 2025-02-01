@@ -44,6 +44,41 @@ TEST(Tests, DuplicateTest) {
     EXPECT_STREQ(duplicate.c_str(), original.c_str());
 }
 
+// Move one BasicSSO contents to another
+TEST(Tests, MoveTest) {
+    BasicSSO original("Original");
+    BasicSSO moved = std::move(original);
+    EXPECT_EQ(moved.length(), original.length());
+    EXPECT_STREQ(moved.c_str(), original.c_str());
+}
+
+// Add assignment operator
+TEST(Tests, AddAsssignmentCStr) {
+    const char* str = "Original";
+    BasicSSO original(str);
+    EXPECT_EQ(original.length(), 8);
+    EXPECT_STREQ(original.c_str(), str);
+    // Now add +
+    const char* addition = "+";
+    original += addition;
+    EXPECT_EQ(original.length(), 9);
+    EXPECT_STREQ(original.c_str(), "Original+");
+}
+
+// Add assignment operator
+TEST(Tests, AddAsssignmentCStrLong) {
+    const char* str = "Original-On-The-Heap";
+    BasicSSO original(str);
+    EXPECT_EQ(original.length(), 20);
+    EXPECT_STREQ(original.c_str(), str);
+    // Now add +
+    const char* addition = "+";
+    original += addition;
+    EXPECT_EQ(original.length(), 21);
+    EXPECT_STREQ(original.c_str(), "Original-On-The-Heap+");
+}
+
+
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);

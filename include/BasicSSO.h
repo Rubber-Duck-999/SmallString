@@ -52,6 +52,35 @@ public:
     return *this;
   }
 
+  
+
+  BasicSSO& operator+=(const char* other_string) {
+    BasicSSO::append(other_string);
+    return *this;
+  }
+
+  void append(const char* other_string) {
+    size_t new_length = length_ + std::strlen(other_string);
+    char* new_data = new char[new_length + 1];
+
+    if (new_length > BUFFER_SIZE) {
+      new_data = new char[new_length + 1];
+      if (length_ <= BUFFER_SIZE) {
+        std::strcpy(new_data, buffer_);
+      } else {
+        std::strcpy(new_data, data_);
+      }
+      delete[] data_;
+      data_ = new_data;
+    } else {
+      new_data = buffer_;
+    }
+
+    std::strcat(new_data, other_string);
+    length_ = new_length;
+    new_data[length_] = '\0';
+  }
+
   size_t length() const { return length_; }
 
   const char* c_str() const {
@@ -71,4 +100,11 @@ private:
   };
   size_t length_;
   // 4 bytes
+
+  void clear() {
+    if (length_ > BUFFER_SIZE) {
+      delete[] data_;
+    }
+    length_ = 0;
+  }
 };
