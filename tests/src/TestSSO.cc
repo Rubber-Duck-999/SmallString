@@ -20,8 +20,7 @@ TEST(Tests, ShortNonZeroString) {
 // Copy one BasicSSO to another
 TEST(Tests, CopyTestStack) {
     BasicSSO original("Original");
-    BasicSSO copy;
-    copy = original;
+    BasicSSO copy(original);
     EXPECT_EQ(copy.length(), original.length());
     EXPECT_STREQ(copy.c_str(), original.c_str());
 }
@@ -36,15 +35,13 @@ TEST(Tests, CopyTestLarge) {
     EXPECT_STREQ(copy.c_str(), original.c_str());
 }
 
-// Copy one BasicSSO to another
-TEST(Tests, AssignmentTest) {
+// Assign one BasicSSO to another
+TEST(Tests, DuplicateTest) {
     BasicSSO original("Original-Test-For-Large-String");
-    BasicSSO copy;
-    // This will throw an error if I use default member copy contructor
-    // Or on address sanitiser
-    copy = original;
-    EXPECT_EQ(copy.length(), original.length());
-    EXPECT_STREQ(copy.c_str(), original.c_str());
+    BasicSSO duplicate;
+    duplicate = original;
+    EXPECT_EQ(duplicate.length(), original.length());
+    EXPECT_STREQ(duplicate.c_str(), original.c_str());
 }
 
 int main(int argc, char **argv)

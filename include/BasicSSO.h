@@ -37,12 +37,18 @@ public:
   BasicSSO(const BasicSSO& other) : BasicSSO(other.c_str()) { }
 
   // When assigning a obejct with another
-  BasicSSO& operator=(const BasicSSO& other) {
-    if (this == &other)
-      return *this;
- 
-    BasicSSO temp(other);
-    // use the copy constructor 
+  BasicSSO& operator=(const BasicSSO& original) {
+    if (this != &original) {
+        // Free any previously allocated memory
+        if (original.length() > BUFFER_SIZE) {
+          data_ = new char[original.length() + 1];
+          std::strcpy(data_, original.c_str());
+        } else {
+          std::strcpy(buffer_, original.c_str());
+          buffer_[original.length()] = '\0';
+        }
+        length_ = original.length();
+    }
     return *this;
   }
 
