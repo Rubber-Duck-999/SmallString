@@ -30,10 +30,10 @@ public:
     }
   }
 
-  // When creating an object with another
+  // Copy Constructor
   BasicSSO(const BasicSSO& other) : BasicSSO(other.c_str()) { }
 
-  // When assigning an object with another
+  // Copy assignment
   BasicSSO& operator=(const BasicSSO& original) {
     if (this != &original) {
       length_ = original.length_;
@@ -48,7 +48,8 @@ public:
   }
 
   // Move constructor
-  BasicSSO(BasicSSO&& original) noexcept : length_(original.length()) {
+  BasicSSO(BasicSSO&& original) noexcept {
+    length_ = original.length();
     if (length_ > BUFFER_SIZE) {
       data_ = new char[length_ + 1];
       std::strcpy(data_, original.c_str());
@@ -58,7 +59,7 @@ public:
     original.length_ = 0;
   }
 
-  // Equal assignment operator
+  // Move assignment operator
   BasicSSO& operator=(BasicSSO&& old) noexcept {
     // Assign this object from old
     if (this != &old) {
@@ -97,8 +98,10 @@ public:
     length_ = new_length;
   }
 
+  // String length
   size_t length() const { return length_; }
 
+  // C style string returned
   const char* c_str() const {
     // Access buffer or pointer array
     if (length_ <= BUFFER_SIZE) {
@@ -113,10 +116,10 @@ private:
     char buffer_[BUFFER_SIZE];
     // 16 bytes
     char* data_;
-    // 4 bytes
+    // 8 bytes (64 bit machine)
     // Was originally a std::unique_ptr but that
     // fails in a union due to its desttructor design
   };
   size_t length_;
-  // 4 bytes
+  // 8 bytes
 };
