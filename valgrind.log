@@ -1,0 +1,89 @@
+==61641== Memcheck, a memory error detector
+==61641== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==61641== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==61641== Command: ./exeSmallString-Test
+==61641== 
+==61641==Shadow memory range interleaves with an existing memory mapping. ASan cannot proceed correctly. ABORTING.
+==61641==ASan shadow was supposed to be located in the [0x00007fff7000-0x10007fff7fff] range.
+==61641==This might be related to ELF_ET_DYN_BASE change in Linux 4.12.
+==61641==See https://github.com/google/sanitizers/issues/856 for possible workarounds.
+==61641==Process memory map follows:
+        0x000000108000-0x00000011a000   /home/simon/Documents/personal/SmallString/build/exeSmallString-Test
+        0x00000011a000-0x000000292000   /home/simon/Documents/personal/SmallString/build/exeSmallString-Test
+        0x000000292000-0x0000002ee000   /home/simon/Documents/personal/SmallString/build/exeSmallString-Test
+        0x0000002ee000-0x0000002f2000   /home/simon/Documents/personal/SmallString/build/exeSmallString-Test
+        0x0000002f2000-0x0000002f6000   /home/simon/Documents/personal/SmallString/build/exeSmallString-Test
+        0x0000002f6000-0x00000082a000
+        0x000004000000-0x000004001000   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+        0x000004001000-0x00000402c000   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+        0x00000402c000-0x000004036000   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+        0x000004036000-0x000004038000   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+        0x000004038000-0x00000403a000   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+        0x00000403a000-0x00000403b000
+        0x00000483a000-0x00000483c000
+        0x00000483c000-0x00000483d000   /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+        0x00000483d000-0x00000483e000   /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+        0x00000483e000-0x00000483f000   /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+        0x00000483f000-0x000004840000   /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+        0x000004840000-0x000004841000   /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+        0x000004841000-0x000004846000   /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+        0x000004846000-0x000004855000   /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+        0x000004855000-0x000004858000   /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+        0x000004858000-0x000004859000   /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+        0x000004859000-0x00000485a000   /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+        0x00000485a000-0x000004875000
+        0x000004879000-0x000004916000   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+        0x000004916000-0x000004a5e000   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+        0x000004a5e000-0x000004ae5000   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+        0x000004ae5000-0x000004af0000   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+        0x000004af0000-0x000004af3000   /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.33
+        0x000004af3000-0x000004af7000
+        0x000004af7000-0x000004b07000   /usr/lib/x86_64-linux-gnu/libm.so.6
+        0x000004b07000-0x000004b86000   /usr/lib/x86_64-linux-gnu/libm.so.6
+        0x000004b86000-0x000004bde000   /usr/lib/x86_64-linux-gnu/libm.so.6
+        0x000004bde000-0x000004bdf000   /usr/lib/x86_64-linux-gnu/libm.so.6
+        0x000004bdf000-0x000004be0000   /usr/lib/x86_64-linux-gnu/libm.so.6
+        0x000004be0000-0x000004be4000   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+        0x000004be4000-0x000004c08000   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+        0x000004c08000-0x000004c0c000   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+        0x000004c0c000-0x000004c0d000   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+        0x000004c0d000-0x000004c0e000   /usr/lib/x86_64-linux-gnu/libgcc_s.so.1
+        0x000004c0e000-0x000004c36000   /usr/lib/x86_64-linux-gnu/libc.so.6
+        0x000004c36000-0x000004dbe000   /usr/lib/x86_64-linux-gnu/libc.so.6
+        0x000004dbe000-0x000004e0d000   /usr/lib/x86_64-linux-gnu/libc.so.6
+        0x000004e0d000-0x000004e11000   /usr/lib/x86_64-linux-gnu/libc.so.6
+        0x000004e11000-0x000004e13000   /usr/lib/x86_64-linux-gnu/libc.so.6
+        0x000004e13000-0x0000051b3000
+        0x0000051b3000-0x0000055b3000
+        0x000058000000-0x000058001000   /usr/libexec/valgrind/memcheck-amd64-linux
+        0x000058001000-0x0000581e8000   /usr/libexec/valgrind/memcheck-amd64-linux
+        0x0000581e8000-0x000058281000   /usr/libexec/valgrind/memcheck-amd64-linux
+        0x000058281000-0x000058287000   /usr/libexec/valgrind/memcheck-amd64-linux
+        0x000058287000-0x000059c93000
+        0x001002001000-0x001002cbc000
+        0x001002ccc000-0x001002d02000
+        0x001002d8c000-0x001002ebc000
+        0x001002ebc000-0x001002ebe000
+        0x001002ebe000-0x001002fbe000
+        0x001002fbe000-0x001002fc0000
+        0x001002fc0000-0x001002fc1000   /tmp/vgdb-pipe-shared-mem-vgdb-61641-by-simon-on-???
+        0x001002fc1000-0x00100530d000
+        0x00100570d000-0x00100590d000
+        0x001005b0a000-0x001005c0a000
+        0x0010060ea000-0x0010061ea000
+        0x001006370000-0x001006670000
+        0x001006765000-0x0010069be000
+        0x001ffeffd000-0x001fff001000
+        0x7fff30ff2000-0x7fff31014000   [stack]
+        0x7fff310c8000-0x7fff310cc000   [vvar]
+        0xffffffffff600000-0xffffffffff601000   [vsyscall]
+==61641==End of process memory map.
+==61641== 
+==61641== HEAP SUMMARY:
+==61641==     in use at exit: 0 bytes in 0 blocks
+==61641==   total heap usage: 95 allocs, 95 frees, 4,938 bytes allocated
+==61641== 
+==61641== All heap blocks were freed -- no leaks are possible
+==61641== 
+==61641== For lists of detected and suppressed errors, rerun with: -s
+==61641== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -1,0 +1,25 @@
+./exeSmallString-Test 
+[==========] Running 8 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 8 tests from Tests
+[ RUN      ] Tests.ShortZeroString
+[       OK ] Tests.ShortZeroString (0 ms)
+[ RUN      ] Tests.ShortNonZeroString
+[       OK ] Tests.ShortNonZeroString (0 ms)
+[ RUN      ] Tests.CopyTestStack
+[       OK ] Tests.CopyTestStack (0 ms)
+[ RUN      ] Tests.CopyTestLarge
+[       OK ] Tests.CopyTestLarge (0 ms)
+[ RUN      ] Tests.DuplicateTest
+[       OK ] Tests.DuplicateTest (0 ms)
+[ RUN      ] Tests.MoveTest
+[       OK ] Tests.MoveTest (0 ms)
+[ RUN      ] Tests.AddAsssignmentCStr
+[       OK ] Tests.AddAsssignmentCStr (0 ms)
+[ RUN      ] Tests.AddAsssignmentCStrLong
+[       OK ] Tests.AddAsssignmentCStrLong (0 ms)
+[----------] 8 tests from Tests (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 8 tests from 1 test suite ran. (0 ms total)
+[  PASSED  ] 8 tests.
